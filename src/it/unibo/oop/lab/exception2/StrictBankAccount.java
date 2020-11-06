@@ -1,5 +1,7 @@
 package it.unibo.oop.lab.exception2;
 
+
+
 /**
  * Class modeling a BankAccount with strict policies: getting money is allowed
  * only with enough founds, and there are also a limited number of free ATM
@@ -25,6 +27,10 @@ public class StrictBankAccount implements BankAccount {
      * @param nMaxATMTransactions
      *            max no of ATM transactions allowed
      */
+    
+    
+    
+    
     public StrictBankAccount(final int usrID, final double balance, final int nMaxATMTransactions) {
         this.usrID = usrID;
         this.balance = balance;
@@ -36,20 +42,29 @@ public class StrictBankAccount implements BankAccount {
      * {@inheritDoc}
      */
     public void deposit(final int usrID, final double amount) {
-        if (checkUser(usrID)) {
+        if (checkUser(usrID) && nTransactions < nMaxATMTransactions) {
             this.balance += amount;
             incTransactions();
+        }else if(!checkUser(usrID)){
+        	throw new WrongAccountHolderException(usrID, this.usrID);
+        }else{
+        	throw new TransactionsOverQuotaException(nTransactions, nMaxATMTransactions);
         }
     }
 
     /**
      * 
      * {@inheritDoc}
+     * @throws NotEnoughFoundsException 
      */
-    public void withdraw(final int usrID, final double amount) {
+    public void withdraw(final int usrID, final double amount){
         if (checkUser(usrID) && isWithdrawAllowed(amount)) {
             this.balance -= amount;
             incTransactions();
+        }else if(!checkUser(usrID)){
+        	throw new WrongAccountHolderException(usrID, this.usrID);
+        }else{
+        	throw new NotEnoughFoundsException(usrID, balance);
         }
     }
 
@@ -61,6 +76,8 @@ public class StrictBankAccount implements BankAccount {
         if (nTransactions < nMaxATMTransactions) {
             this.deposit(usrID, amount - StrictBankAccount.ATM_TRANSACTION_FEE);
             nTransactions++;
+        }else {
+        	throw new TransactionsOverQuotaException(nTransactions, nMaxATMTransactions);
         }
     }
 
@@ -69,9 +86,13 @@ public class StrictBankAccount implements BankAccount {
      * {@inheritDoc}
      */
     public void withdrawFromATM(final int usrID, final double amount) {
-        if (nTransactions < nMaxATMTransactions) {
-            this.withdraw(usrID, amount + StrictBankAccount.ATM_TRANSACTION_FEE);
-        }
+        
+        	if (nTransactions < nMaxATMTransactions) {
+                this.withdraw(usrID, amount + StrictBankAccount.ATM_TRANSACTION_FEE);
+            }else {
+            	new TransactionsOverQuotaException(nTransactions, nMaxATMTransactions);
+            }
+    	
     }
 
     /**
@@ -100,6 +121,10 @@ public class StrictBankAccount implements BankAccount {
         if (checkUser(usrID) && isWithdrawAllowed(feeAmount)) {
             balance -= MANAGEMENT_FEE + nTransactions * StrictBankAccount.TRANSACTION_FEE;
             nTransactions = 0;
+        }else if(!checkUser(usrID)){
+        	new WrongAccountHolderException(usrID, this.usrID);
+        }else{
+        	new NotEnoughFoundsException(usrID, balance);
         }
     }
 

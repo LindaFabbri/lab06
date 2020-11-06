@@ -1,7 +1,12 @@
 package it.unibo.oop.lab.collections2;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+
 
 /**
  * 
@@ -17,6 +22,8 @@ import java.util.List;
  *            Specific user type
  */
 public class SocialNetworkUserImpl<U extends User> extends UserImpl implements SocialNetworkUser<U> {
+	
+	final Map<String, List<U>> contatto; //contatto ha la stringa per il nome del gruppo e List per la lista delle persone (user) che appartengono a quel gruppo
 
     /*
      * 
@@ -56,7 +63,14 @@ public class SocialNetworkUserImpl<U extends User> extends UserImpl implements S
      */
     public SocialNetworkUserImpl(final String name, final String surname, final String user, final int userAge) {
         super(name, surname, user, userAge);
+        contatto = new HashMap<>();
     }
+    
+    public SocialNetworkUserImpl(final String name, final String surname, final String user) {
+        super(name, surname, user);
+        contatto = new HashMap<>();
+    }
+    
 
     /*
      * [METHODS]
@@ -66,17 +80,68 @@ public class SocialNetworkUserImpl<U extends User> extends UserImpl implements S
 
     @Override
     public boolean addFollowedUser(final String circle, final U user) {
-        return false;
+    	
+    	boolean res = false;
+    	
+    	for(List<U> amiciList : contatto.values()) {
+    		if(amiciList.contains(user)) {
+    			res = false;
+    		}else {
+    			res = true;
+    		}
+    	}
+    	if(contatto.containsKey(circle)) {
+    		contatto.get(circle).add(user);
+    	} else {
+    		final List<U> gruppoTemp = new ArrayList<>();
+    		gruppoTemp.add(user);
+    		contatto.put(circle, gruppoTemp);
+    	}
+        return res;
     }
 
     @Override
     public Collection<U> getFollowedUsersInGroup(final String groupName) {
-        return null;
+    	if(contatto.containsKey(groupName)) {
+    		return new ArrayList<>(contatto.get(groupName));
+    	} else{
+    		return new ArrayList<>();
+    	}
+    	
     }
 
     @Override
     public List<U> getFollowedUsers() {
-        return null;
+    	List<U> tuttiAmiciList = new ArrayList<>();
+    	for(List<U> utenteList : contatto.values()) {
+    		for (U utenteU : utenteList) {
+    			if(!tuttiAmiciList.contains(utenteU)) {
+    				tuttiAmiciList.add(utenteU);
+    			}
+    		}
+    	}
+    	return tuttiAmiciList;
     }
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
