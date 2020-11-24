@@ -6,52 +6,48 @@ package it.unibo.oop.lab.exception1;
  */
 public class RobotPosition {
 
-    private int x;
-    private int y;
+	private int x;
+	private int y;
 
-    /**
-     * 
-     * @param x
-     *            x position
-     * @param y
-     *            y position
-     */
-    public RobotPosition(final int x, final int y) {
-        this.x = x;
-        this.y = y;
-    }
+	/**
+	 * 
+	 * @param x x position
+	 * @param y y position
+	 */
+	public RobotPosition(final int x, final int y) {
+		this.x = x;
+		this.y = y;
+	}
 
-    /**
-     * 
-     * @return X position
-     */
-    public int getX() {
-        return this.x;
-    }
+	/**
+	 * 
+	 * @return X position
+	 */
+	public int getX() {
+		return this.x;
+	}
 
-    /**
-     * 
-     * @param x
-     *            set x position
-     */
-    public void setX(final int x) {
-        this.x = x;
-    }
+	/**
+	 * 
+	 * @param x set x position
+	 */
+	public void setX(final int x) {
+		this.x = x;
+	}
 
-    /**
-     * 
-     * @return Y position
-     */
-    public int getY() {
-        return this.y;
-    }
+	/**
+	 * 
+	 * @return Y position
+	 */
+	public int getY() {
+		return this.y;
+	}
 
-    /**
-     * 
-     * @param y
-     *            set y position
-     */
-    public void setY(final int y) {
-        this.y = y;
-    }
+	/**
+	 * 
+	 * @param y set y position
+	 */
+	public void setY(final int y) {
+		this.y = y;
+	}
 }

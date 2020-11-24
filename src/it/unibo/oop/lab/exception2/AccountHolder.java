@@ -12,15 +12,12 @@ public class AccountHolder {
     private final Integer userID;
 
     /**
-     * Initialize a new AccountHolder object with the params provided in input.
-     * 
-     * @param name
-     *            holder first name
-     * @param surname
-     *            holder last name
-     * @param accountID
-     *            holder id
-     */
+	 * Initialize a new AccountHolder object with the params provided in input.
+	 * 
+	 * @param name      holder first name
+	 * @param surname   holder last name
+	 * @param accountID holder id
+	 */
     public AccountHolder(final String name, final String surname, final Integer accountID) {
         this.name = name;
         this.surname = surname;

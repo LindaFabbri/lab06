@@ -1,7 +1,7 @@
 package it.unibo.oop.lab.exception2;
 
-public class TransactionsOverQuotaException extends IllegalStateException{
-	
+public class TransactionsOverQuotaException extends IllegalStateException {
+
 	/**
 	 * 
 	 */
@@ -13,11 +13,12 @@ public class TransactionsOverQuotaException extends IllegalStateException{
 		this.nTrans = trans;
 		this.nMaxAtm = atm;
 	}
-	
+
 	public String toString() {
-		return "TransactionsOverQuotaException [Number of transitions=" + nTrans + ", are more than the limit of MaxATM Transitions=" + nMaxAtm + "]";
+		return "TransactionsOverQuotaException [Number of transitions=" + nTrans
+				+ ", are more than the limit of MaxATM Transitions=" + nMaxAtm + "]";
 	}
-	
+
 	public String getMessage() {
 		return this.toString();
 	}
